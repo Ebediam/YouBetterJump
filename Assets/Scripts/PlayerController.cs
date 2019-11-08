@@ -5,14 +5,19 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     public Rigidbody rb;
-    public float speed;
+    public float acceleration;
     public float maxSpeed;
     public float jumpForce;
     public List<Transform> groundChecks;
+    public Transform ledgeCheck;
+
     public bool isGrounded = true;
+    public bool isHanging = false;
     public Ray groundRay;
     public float rayLength;
     public bool disableGroundCheck = false;
+    public bool secondaryJump = false;
+    public float secondaryJumpForce;
 
     public float noGroundCheckTimer;
 
@@ -30,46 +35,71 @@ public class PlayerController : MonoBehaviour
     {
         if (!disableGroundCheck)
         {
-            isGrounded = false; 
-            foreach (Transform groundCheck in groundChecks)
+            if (Mathf.Abs(rb.velocity.y) < 0.1f)
             {
-                groundRay = new Ray(groundCheck.position, groundCheck.forward);
+                isGrounded = false;
+                foreach (Transform groundCheck in groundChecks)
+                {
+                    groundRay = new Ray(groundCheck.position, groundCheck.forward);
 
-                if (Physics.Raycast(groundRay, rayLength))
-                {
-                    Debug.DrawLine(groundCheck.position, groundCheck.position + groundCheck.forward * rayLength, Color.green);
-                    isGrounded = true;
-                    break;
-                }
-                else
-                {
-                    Debug.DrawLine(groundCheck.position, groundCheck.position + groundCheck.forward * rayLength, Color.red);
+                    if (Physics.Raycast(groundRay, rayLength))
+                    {
+                        Debug.DrawLine(groundCheck.position, groundCheck.position + groundCheck.forward * rayLength, Color.green);
+                        isGrounded = true;
+                        secondaryJump = false;
+                        break;
+                    }
+                    else
+                    {
+                        Debug.DrawLine(groundCheck.position, groundCheck.position + groundCheck.forward * rayLength, Color.red);
+                    }
                 }
             }
+            
+
+            if (rb.velocity.y < 0 && !isHanging)
+            {
+                Ray ledgeRay = new Ray(ledgeCheck.transform.position, ledgeCheck.forward);
+                if (Physics.Raycast(ledgeRay, rayLength))
+                {
+                    rb.velocity = Vector3.zero;
+                    rb.useGravity = false;
+                    isHanging = true;
+
+                }
+            }
+
+
+
         }
-        
 
 
-        rb.AddForce(transform.forward * speed, ForceMode.Force);
 
-        if(rb.velocity.z > maxSpeed)
+        if (!isHanging)
+        {
+            rb.AddForce(transform.forward * acceleration, ForceMode.Force);
+        }
+
+        if (rb.velocity.z > maxSpeed)
         {
             rb.velocity = new Vector3(rb.velocity.x, rb.velocity.y, maxSpeed);
         }
 
         if (Input.GetAxis("Jump")> 0)
         {
-            if (isGrounded)
-            {   
-
-                Debug.Log("JUMP!");
+            if (isGrounded || isHanging)
+            {
+                rb.useGravity = true;                
                 rb.AddForce(transform.up * jumpForce, ForceMode.Impulse);
                 isGrounded = false;
                 disableGroundCheck = true;
+                isHanging = false;
             }
-            else
+            else if(secondaryJump)
             {
-                Debug.Log("Key pressed but not on the ground");
+                secondaryJump = false;
+                rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
+                rb.AddForce(transform.up * secondaryJumpForce, ForceMode.Impulse);
             }
         }
 
