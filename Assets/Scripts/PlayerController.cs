@@ -22,7 +22,8 @@ public class PlayerController : MonoBehaviour
     public float noGroundCheckTimer;
 
     float groundTimer;
-    
+
+    public Animator animator;
 
     // Start is called before the first frame update
     void Start()
@@ -60,11 +61,12 @@ public class PlayerController : MonoBehaviour
             if (rb.velocity.y < 0 && !isHanging)
             {
                 Ray ledgeRay = new Ray(ledgeCheck.transform.position, ledgeCheck.forward);
-                if (Physics.Raycast(ledgeRay, rayLength))
+                if (Physics.Raycast(ledgeRay, rayLength*2))
                 {
                     rb.velocity = Vector3.zero;
                     rb.useGravity = false;
                     isHanging = true;
+
 
                 }
             }
@@ -84,6 +86,8 @@ public class PlayerController : MonoBehaviour
         {
             rb.velocity = new Vector3(rb.velocity.x, rb.velocity.y, maxSpeed);
         }
+
+
 
         if (Input.GetAxis("Jump")> 0)
         {
@@ -116,6 +120,11 @@ public class PlayerController : MonoBehaviour
                 groundTimer = 0f;
             }
         }
+
+        animator.SetFloat("speedPercent", rb.velocity.z / maxSpeed);
+        animator.SetBool("isHanging", isHanging);
+        animator.SetBool("isJumping", !isGrounded);
+        animator.SetFloat("verticalVelocity", rb.velocity.y);
 
 
     }
