@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7104068650218930588}
   m_Layer: 0
-  m_Name: Wing (1)
+  m_Name: LeftWing
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -41,7 +41,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7915055628799789705}
   m_Layer: 0
-  m_Name: Wing
+  m_Name: RightWing
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -104,7 +104,7 @@ ParticleSystem:
   serializedVersion: 6
   lengthInSec: 1
   simulationSpeed: 1
-  stopAction: 2
+  stopAction: 0
   cullingMode: 0
   ringBufferMode: 0
   ringBufferLoopRange: {x: 0, y: 1}
@@ -4885,7 +4885,7 @@ GameObject:
   - component: {fileID: 9054241081375037474}
   - component: {fileID: 1636761830878262235}
   m_Layer: 0
-  m_Name: Sphere
+  m_Name: LeftWing
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4963,7 +4963,7 @@ GameObject:
   - component: {fileID: 2015120808345952180}
   - component: {fileID: 5342859469268919799}
   m_Layer: 0
-  m_Name: Sphere
+  m_Name: RightWing
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5041,7 +5041,7 @@ GameObject:
   - component: {fileID: 2372213699571470268}
   - component: {fileID: 5794167466904542251}
   m_Layer: 0
-  m_Name: Sphere
+  m_Name: Body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5171,6 +5171,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 0}
   takeVFX: {fileID: 1333485305068514621}
+  meshes:
+  - {fileID: 5794167466904542251}
+  - {fileID: 1636761830878262235}
+  - {fileID: 5342859469268919799}
+  col: {fileID: 8652977802843209306}
 --- !u!95 &2704542182816758342
 Animator:
   serializedVersion: 3

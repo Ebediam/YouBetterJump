@@ -5,8 +5,13 @@ using UnityEngine.SceneManagement;
 
 public class GoalPost : MonoBehaviour
 {
+    public int sceneNumber;
+    public delegate void SceneChangeDelegate();
+    public static SceneChangeDelegate SceneChangeEvent;
+
     private void OnTriggerEnter(Collider other)
     {
-        SceneManager.LoadScene(1);
+        SceneChangeEvent?.Invoke();
+        SceneManager.LoadScene(sceneNumber);
     }
 }
