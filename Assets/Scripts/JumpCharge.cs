@@ -13,6 +13,7 @@ public class JumpCharge : MonoBehaviour
     {
         GameController.RestartEvent += Restart;
         GoalPost.SceneChangeEvent += SceneChange;
+        player = GameController.local.player;
 
     }
 
@@ -32,7 +33,7 @@ public class JumpCharge : MonoBehaviour
     {
         if(other.transform.root.GetComponentInChildren<PlayerController>())
         {
-            player.secondaryJump = true;
+            player.EnableSecondaryJump();
             takeVFX.Play();
             SwitchActive(false);           
             

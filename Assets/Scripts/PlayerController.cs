@@ -29,6 +29,8 @@ public class PlayerController : MonoBehaviour
 
     public Animator animator;
 
+    public Material material;
+
     // Start is called before the first frame update
     void Awake()
     {
@@ -76,7 +78,7 @@ public class PlayerController : MonoBehaviour
                     if (Physics.Raycast(groundRay, rayLength))
                     {
                         isGrounded = true;
-                        secondaryJump = false;
+                        DisableSecondaryJump();
                         break;
                     }
 
@@ -155,7 +157,7 @@ public class PlayerController : MonoBehaviour
         }
         else if (secondaryJump)
         {
-            secondaryJump = false;
+            DisableSecondaryJump();
             rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
             rb.AddForce(transform.up * secondaryJumpForce, ForceMode.Impulse);
         }
@@ -187,6 +189,18 @@ public class PlayerController : MonoBehaviour
     {
         transform.position = GameController.local.spawnPoint.position;
         rb.velocity = Vector3.zero;
+    }
+
+    public void EnableSecondaryJump()
+    {
+        secondaryJump = true;
+        material.SetFloat("_hasDoubleJump", 1);
+    }
+
+    public void DisableSecondaryJump()
+    {
+        secondaryJump = false;
+        material.SetFloat("_hasDoubleJump", 0);
     }
 
     public void DrawDebugLines()
