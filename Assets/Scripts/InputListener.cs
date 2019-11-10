@@ -21,6 +21,7 @@ public class InputListener : MonoBehaviour
         if (menu)
         {
             controls.GamePlay.Jump.performed += ChangeScene;
+            controls.GamePlay.Pause.performed += ExitGame;
         }
         {
             controls.GamePlay.Pause.performed += Pause;
@@ -42,6 +43,11 @@ public class InputListener : MonoBehaviour
         paused = !paused;
         PauseEvent?.Invoke(paused);
 
+    }
+
+    public void ExitGame(InputAction.CallbackContext context)
+    {
+        Application.Quit();
     }
 
     public void ResetLevel(InputAction.CallbackContext context)

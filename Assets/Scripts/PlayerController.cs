@@ -183,13 +183,19 @@ public class PlayerController : MonoBehaviour
             rb.AddForce(transform.up * secondaryJumpForce, ForceMode.Impulse);
         }
         isHovering = true;
-        Invoke("CancelJump", hoverTime);
+        Invoke("CancelJumpInmediate", hoverTime);
 
     }
 
     public void CancelJump(InputAction.CallbackContext context)
     {
-        CancelInvoke("CancelJump");
+        CancelInvoke("CancelJumpInmediate");
+        CancelJumpInmediate();
+    }
+
+    public void CancelJumpInmediate()
+    {
+        CancelInvoke("CancelJumpInmediate");
         isHovering = false;
     }
 

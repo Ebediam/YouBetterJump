@@ -6,6 +6,7 @@ public class JumpCharge : MonoBehaviour
 {
     public PlayerController player;
     public ParticleSystem takeVFX;
+    public ParticleSystem idleVFX;
     public List<MeshRenderer> meshes;
     public Collider col;
 
@@ -35,7 +36,8 @@ public class JumpCharge : MonoBehaviour
         {
             player.EnableSecondaryJump();
             takeVFX.Play();
-            SwitchActive(false);           
+            SwitchActive(false);
+
             
         }
     }
@@ -47,5 +49,14 @@ public class JumpCharge : MonoBehaviour
             mesh.enabled = active;
         }
         col.enabled = active;
+
+        if (active)
+        {
+            idleVFX.Play();
+        }
+        else
+        {
+            idleVFX.Stop();
+        }
     }
 }
