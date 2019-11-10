@@ -12,6 +12,7 @@ public class PlayerController : MonoBehaviour
     public float jumpForce;
     public List<Transform> groundChecks;
     public Transform ledgeCheck;
+    public Transform ceilingCheck;
 
     public Collider controlCollider;
 
@@ -22,6 +23,10 @@ public class PlayerController : MonoBehaviour
     public bool disableGroundCheck = false;
     public bool secondaryJump = false;
     public float secondaryJumpForce;
+
+    public bool isHovering = false;
+    public float hoverTime;
+    public float hoverForce;
 
     public float noGroundCheckTimer;
 
@@ -37,6 +42,8 @@ public class PlayerController : MonoBehaviour
         controls = new PlayerControls();
 
         controls.GamePlay.Jump.performed += Jump;
+        controls.GamePlay.Jump.canceled += CancelJump;
+        
 
     }
 
@@ -63,11 +70,12 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
+
         DrawDebugLines();
         if (!disableGroundCheck)
         {
 
-            if (rb.velocity.y < 0.01f || rb.velocity.y > 0.01)
+            if (rb.velocity.y < 0.1f || rb.velocity.y > 0.1)
             {
 
                 isGrounded = false;
@@ -78,6 +86,7 @@ public class PlayerController : MonoBehaviour
                     if (Physics.Raycast(groundRay, rayLength))
                     {
                         isGrounded = true;
+                        isHovering = false;
                         DisableSecondaryJump();
                         break;
                     }
@@ -87,18 +96,24 @@ public class PlayerController : MonoBehaviour
             }
             animator.SetBool("isJumping", !isGrounded);
 
-            if (rb.velocity.y < 0 && !isHanging)
+            if (rb.velocity.y < -0.1f && !isHanging && !isGrounded)
             {
-                Ray ledgeRay = new Ray(ledgeCheck.transform.position, ledgeCheck.forward);
-                if (Physics.Raycast(ledgeRay, rayLength*1.5f))
+                Ray ceilingRay = new Ray(ceilingCheck.transform.position, ceilingCheck.forward);
+                if(!Physics.Raycast(ceilingRay, rayLength))
                 {
-                    rb.velocity = Vector3.zero;
-                    rb.useGravity = false;
-                    isHanging = true;
-                    animator.SetBool("isHanging", isHanging);
+                    Ray ledgeRay = new Ray(ledgeCheck.transform.position, ledgeCheck.forward);
+                    if (Physics.Raycast(ledgeRay, rayLength ))
+                    {
+                        rb.velocity = Vector3.zero;
+                        rb.useGravity = false;
+                        isHanging = true;
+                        animator.SetBool("isHanging", isHanging);
 
 
+                    }
                 }
+
+
             }
 
 
@@ -110,6 +125,10 @@ public class PlayerController : MonoBehaviour
         if (!isHanging)
         {
             rb.AddForce(transform.forward * acceleration, ForceMode.Force);
+            if (isHovering)
+            {
+                rb.AddForce(transform.up * hoverForce, ForceMode.Force);
+            }
         }
 
         if (rb.velocity.z > maxSpeed)
@@ -145,6 +164,7 @@ public class PlayerController : MonoBehaviour
 
     public void Jump(InputAction.CallbackContext context)
     {
+        Debug.Log("JUMP");
         if (isGrounded || isHanging)
         {
             rb.useGravity = true;
@@ -153,7 +173,8 @@ public class PlayerController : MonoBehaviour
             animator.SetBool("isJumping", !isGrounded);
             disableGroundCheck = true;
             isHanging = false;
-                    animator.SetBool("isHanging", isHanging);
+            animator.SetBool("isHanging", isHanging);
+
         }
         else if (secondaryJump)
         {
@@ -161,6 +182,15 @@ public class PlayerController : MonoBehaviour
             rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
             rb.AddForce(transform.up * secondaryJumpForce, ForceMode.Impulse);
         }
+        isHovering = true;
+        Invoke("CancelJump", hoverTime);
+
+    }
+
+    public void CancelJump(InputAction.CallbackContext context)
+    {
+        CancelInvoke("CancelJump");
+        isHovering = false;
     }
 
     public void OnEnable()
@@ -189,6 +219,7 @@ public class PlayerController : MonoBehaviour
     {
         transform.position = GameController.local.spawnPoint.position;
         rb.velocity = Vector3.zero;
+        isGrounded = false;
     }
 
     public void EnableSecondaryJump()

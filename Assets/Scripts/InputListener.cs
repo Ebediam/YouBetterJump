@@ -24,6 +24,7 @@ public class InputListener : MonoBehaviour
         }
         {
             controls.GamePlay.Pause.performed += Pause;
+            controls.GamePlay.Jump.performed += ResetLevel;
         }
 
 
@@ -41,6 +42,15 @@ public class InputListener : MonoBehaviour
         paused = !paused;
         PauseEvent?.Invoke(paused);
 
+    }
+
+    public void ResetLevel(InputAction.CallbackContext context)
+    {
+        if (paused)
+        {
+            GameController.Restart();
+            Pause(context);
+        }
     }
 
     public void OnEnable()

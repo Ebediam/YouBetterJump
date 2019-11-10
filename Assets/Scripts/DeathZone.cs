@@ -7,8 +7,6 @@ public class DeathZone : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-
-
         if (other.GetComponentInChildren<PlayerController>())
         {
             GameController.Restart();
