@@ -9,6 +9,7 @@ public class Enemy : MonoBehaviour
     public int switchFrames;
     public bool isStatic = false;
     public Transform startPosition;
+    public bool canMove;
     // Start is called before the first frame update
     void Start()
     {
@@ -19,6 +20,7 @@ public class Enemy : MonoBehaviour
     public void Reset()
     {
         transform.position = startPosition.position;
+        canMove = false;
     }
     // Update is called once per frame
 
@@ -30,6 +32,12 @@ public class Enemy : MonoBehaviour
 
     void Update()
     {
+        if (!canMove)
+        {
+            return;
+        }
+
+
         frames++;
         if(frames >= switchFrames)
         {
@@ -43,4 +51,6 @@ public class Enemy : MonoBehaviour
         }
 
     }
+
+
 }

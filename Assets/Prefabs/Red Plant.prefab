@@ -18,7 +18,21 @@ MonoBehaviour:
   fireDelay: 5
   timeNoise: 0
   bulletLifeTime: 10
+  initialTimer: 0
   timer: 0
+--- !u!135 &7085390858975484024
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2214477731432687260}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 75
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1638564274304013235
 GameObject:
   m_ObjectHideFlags: 0

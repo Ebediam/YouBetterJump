@@ -13,6 +13,8 @@ public class Shooter : MonoBehaviour
     public float bulletLifeTime;
     public float initialTimer;
 
+    public bool canShoot;
+
     public float timer;
     // Start is called before the first frame update
     void Start()
@@ -33,12 +35,19 @@ public class Shooter : MonoBehaviour
     public void Restart()
     {
         timer = initialTimer;
+        canShoot = false;
 
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (!canShoot)
+        {
+            timer = initialTimer;
+            return;
+        }
+
         timer += Time.deltaTime;
         if(timer >= fireDelay)
         {
@@ -47,6 +56,15 @@ public class Shooter : MonoBehaviour
             bulletInstance.transform.localScale = transform.localScale*2f;
             bulletInstance.GetComponent<Rigidbody>().AddForce(bulletInstance.transform.forward * bulletSpeed, ForceMode.VelocityChange);
             Destroy(bulletInstance, bulletLifeTime);
+        }
+
+    }
+
+    public void OnTriggerEnter(Collider other)
+    {
+        if (other.transform.GetComponentInChildren<PlayerController>())
+        {
+            canShoot = true;
         }
 
     }

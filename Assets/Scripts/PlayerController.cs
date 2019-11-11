@@ -49,12 +49,6 @@ public class PlayerController : MonoBehaviour
 
     public void Start()
     {
-        foreach(Collider col in gameObject.GetComponentsInChildren<Collider>())
-        {
-            col.enabled = false;
-
-        }
-        controlCollider.enabled = true;
         GameController.RestartEvent += Restart;
         GoalPost.SceneChangeEvent += SceneChange;
 
@@ -74,7 +68,6 @@ public class PlayerController : MonoBehaviour
         DrawDebugLines();
         if (!disableGroundCheck)
         {
-
             if (rb.velocity.y < 0.1f || rb.velocity.y > 0.1)
             {
 
@@ -102,7 +95,7 @@ public class PlayerController : MonoBehaviour
                 if(!Physics.Raycast(ceilingRay, rayLength))
                 {
                     Ray ledgeRay = new Ray(ledgeCheck.transform.position, ledgeCheck.forward);
-                    if (Physics.Raycast(ledgeRay, rayLength ))
+                    if (Physics.Raycast(ledgeRay, rayLength*0.5f ))
                     {
                         rb.velocity = Vector3.zero;
                         rb.useGravity = false;
