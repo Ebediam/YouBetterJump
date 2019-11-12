@@ -1336,7 +1336,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2826549998778364671}
   - component: {fileID: 3214426575504348302}
-  - component: {fileID: 1436825187490241497}
+  - component: {fileID: 8884701301469107873}
   m_Layer: 0
   m_Name: Vine
   m_TagString: Untagged
@@ -1545,7 +1545,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b5b058af83c69d841a82a2862cb17b9c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!65 &1436825187490241497
+--- !u!65 &8884701301469107873
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1556,8 +1556,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1.827774, y: 9.076347, z: 2.0235543}
-  m_Center: {x: 0.06298828, y: -0.1296053, z: -0.51177716}
+  m_Size: {x: 1.5332108, y: 7.7885947, z: 2.485888}
+  m_Center: {x: -0.009174347, y: -0.16044736, z: -0.14241719}
 --- !u!1 &1472594975898152082
 GameObject:
   m_ObjectHideFlags: 0

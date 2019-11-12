@@ -10,6 +10,7 @@ public class Enemy : MonoBehaviour
     public bool isStatic = false;
     public Transform startPosition;
     public bool canMove;
+    public bool alwaysMoves;
     // Start is called before the first frame update
     void Start()
     {
@@ -20,7 +21,7 @@ public class Enemy : MonoBehaviour
     public void Reset()
     {
         transform.position = startPosition.position;
-        canMove = false;
+        //canMove = false;
     }
     // Update is called once per frame
 
@@ -34,7 +35,11 @@ public class Enemy : MonoBehaviour
     {
         if (!canMove)
         {
-            return;
+            if (!alwaysMoves)
+            {
+                return;
+            }
+
         }
 
 

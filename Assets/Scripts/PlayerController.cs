@@ -95,7 +95,7 @@ public class PlayerController : MonoBehaviour
                 if(!Physics.Raycast(ceilingRay, rayLength))
                 {
                     Ray ledgeRay = new Ray(ledgeCheck.transform.position, ledgeCheck.forward);
-                    if (Physics.Raycast(ledgeRay, rayLength*0.5f ))
+                    if (Physics.Raycast(ledgeRay, rayLength ))
                     {
                         rb.velocity = Vector3.zero;
                         rb.useGravity = false;
@@ -252,13 +252,22 @@ public class PlayerController : MonoBehaviour
         Ray ledgeRay = new Ray(ledgeCheck.transform.position, ledgeCheck.forward);
         if (Physics.Raycast(ledgeRay, rayLength * 1.5f))
         {
-            Debug.DrawLine(ledgeCheck.position, ledgeCheck.position + ledgeCheck.forward * rayLength * 1.5f, Color.green);
+            Debug.DrawLine(ledgeCheck.position, ledgeCheck.position + ledgeCheck.forward * rayLength, Color.green);
         }
         else
         {
-            Debug.DrawLine(ledgeCheck.position, ledgeCheck.position + ledgeCheck.forward * rayLength * 1.5f, Color.red);
+            Debug.DrawLine(ledgeCheck.position, ledgeCheck.position + ledgeCheck.forward * rayLength, Color.red);
         }
 
+        Ray ceilingRay = new Ray(ceilingCheck.transform.position, ceilingCheck.forward);
+        if (Physics.Raycast(ceilingRay, rayLength))
+        {
+            Debug.DrawLine(ceilingCheck.position, ceilingCheck.position + ledgeCheck.forward * rayLength, Color.green);
+        }
+        else
+        {
+            Debug.DrawLine(ceilingCheck.position, ceilingCheck.position + ceilingCheck.forward * rayLength, Color.red);
+        }
 
     }
 }
