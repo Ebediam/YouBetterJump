@@ -35,6 +35,8 @@ public class PlayerController : MonoBehaviour
     public Animator animator;
 
     public Material material;
+    public AudioSource jumpSFX;
+    public AudioSource deathSFX;
 
     // Start is called before the first frame update
     void Awake()
@@ -157,7 +159,6 @@ public class PlayerController : MonoBehaviour
 
     public void Jump(InputAction.CallbackContext context)
     {
-        Debug.Log("JUMP");
         if (isGrounded || isHanging)
         {
             rb.useGravity = true;
@@ -167,6 +168,7 @@ public class PlayerController : MonoBehaviour
             disableGroundCheck = true;
             isHanging = false;
             animator.SetBool("isHanging", isHanging);
+            jumpSFX.Play();
 
         }
         else if (secondaryJump)
@@ -174,6 +176,7 @@ public class PlayerController : MonoBehaviour
             DisableSecondaryJump();
             rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
             rb.AddForce(transform.up * secondaryJumpForce, ForceMode.Impulse);
+            jumpSFX.Play();
         }
         isHovering = true;
         Invoke("CancelJumpInmediate", hoverTime);
@@ -219,6 +222,7 @@ public class PlayerController : MonoBehaviour
         transform.position = GameController.local.spawnPoint.position;
         rb.velocity = Vector3.zero;
         isGrounded = false;
+        deathSFX.Play();
     }
 
     public void EnableSecondaryJump()

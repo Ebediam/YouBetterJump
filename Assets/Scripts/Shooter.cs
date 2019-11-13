@@ -16,6 +16,8 @@ public class Shooter : MonoBehaviour
     public bool canShoot;
 
     public float timer;
+
+    public AudioSource shotSFX;
     // Start is called before the first frame update
     void Start()
     {
@@ -56,6 +58,7 @@ public class Shooter : MonoBehaviour
             bulletInstance.transform.localScale = transform.localScale*2f;
             bulletInstance.GetComponent<Rigidbody>().AddRelativeForce(Vector3.forward * bulletSpeed, ForceMode.VelocityChange);
             Destroy(bulletInstance, bulletLifeTime);
+            shotSFX.Play();
         }
 
     }

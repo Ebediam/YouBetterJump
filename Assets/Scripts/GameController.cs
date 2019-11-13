@@ -18,6 +18,10 @@ public class GameController : MonoBehaviour
 
     public static GameController local;
     public Transform spawnPoint;
+
+    public bool firstKey;
+    public bool secondKey;
+    public bool thirdKey;
     // Start is called before the first frame update
     void Awake()
     {

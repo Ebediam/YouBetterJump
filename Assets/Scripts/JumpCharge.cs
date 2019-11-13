@@ -9,12 +9,17 @@ public class JumpCharge : MonoBehaviour
     public ParticleSystem idleVFX;
     public List<MeshRenderer> meshes;
     public Collider col;
+    public Animator animator;
+    public AudioSource chargeSFX;
 
+    public bool isTrapped;
     public void Start()
     {
         GameController.RestartEvent += Restart;
         GoalPost.SceneChangeEvent += SceneChange;
         player = GameController.local.player;
+
+        animator.SetBool("isTrapped", isTrapped);
 
     }
 
@@ -36,6 +41,7 @@ public class JumpCharge : MonoBehaviour
         {
             player.EnableSecondaryJump();
             takeVFX.Play();
+            chargeSFX.Play();
             SwitchActive(false);
 
             

@@ -420,6 +420,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   keyScript: {fileID: 11400000, guid: 846dd245b68bd12438d31269b284b58a, type: 2}
   icon: {fileID: 2465899011430078997}
+  gameController: {fileID: 7442538649684046719}
 --- !u!1 &4367006806683870286
 GameObject:
   m_ObjectHideFlags: 0
@@ -538,6 +539,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   keyScript: {fileID: 11400000, guid: c7a9908a40bf36f4fa17e3bf868788d4, type: 2}
   icon: {fileID: 5721772174902040633}
+  gameController: {fileID: 7442538649684046719}
 --- !u!1 &7442538649684046718
 GameObject:
   m_ObjectHideFlags: 0
@@ -587,6 +589,9 @@ MonoBehaviour:
   canvas: {fileID: 1932825255}
   player: {fileID: 0}
   spawnPoint: {fileID: 6528063925318208282}
+  firstKey: 0
+  secondKey: 0
+  thirdKey: 0
 --- !u!114 &5519327273160416219
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -846,3 +851,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   keyScript: {fileID: 11400000, guid: bb7c62a38bc2dda4ba5700f025077f94, type: 2}
   icon: {fileID: 7510049936313253284}
+  gameController: {fileID: 7442538649684046719}

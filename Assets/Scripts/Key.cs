@@ -6,6 +6,8 @@ using UnityEngine.SceneManagement;
 public class Key : MonoBehaviour
 {
 
+    public AudioSource pickUPSFX;
+
     public MeshRenderer mesh;
     public Collider col;
     public ParticleSystem pickVFX;
@@ -50,6 +52,7 @@ public class Key : MonoBehaviour
         {
             pickVFX.Play();
             SwitchActive(false);
+            pickUPSFX.Play();
             KeyCollectedEvent?.Invoke(SceneManager.GetActiveScene().buildIndex);
 
         }

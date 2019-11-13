@@ -8,6 +8,7 @@ public class KeyController : MonoBehaviour
 {
     public KeyScript keyScript;
     public Image icon;
+    public GameController gameController;
     
     
     // Start is called before the first frame update
@@ -17,11 +18,30 @@ public class KeyController : MonoBehaviour
         if (keyScript.unlocked)
         {            
             icon.sprite = keyScript.fullKey;
+            switch (keyScript.level)
+            {
+                case 1:
+                    gameController.firstKey = true;
+                    break;
+
+                case 2:
+                    gameController.secondKey = true;
+                    break;
+
+                case 3:
+                    gameController.thirdKey = true;
+                    break;
+
+                default:
+                    break;
+            }
         }
         else
         {
             icon.sprite = keyScript.emptyKey;
         }
+
+
 
 
     }
