@@ -24,10 +24,13 @@ public class CheckPoint : MonoBehaviour
             return;
         }
 
-        GameController.local.transform.position = new Vector3(0f, transform.position.y, transform.position.z);
-        eyeMaterial.SetFloat("_hasDoubleJump", 1);
-        bodyMaterial.SetFloat("_hasDoubleJump", 1);
-        light.enabled = true;
+        if (other.transform.root.GetComponentInChildren<PlayerController>())
+        {
+            GameController.local.transform.position = new Vector3(0f, transform.position.y, transform.position.z);
+            eyeMaterial.SetFloat("_hasDoubleJump", 1);
+            bodyMaterial.SetFloat("_hasDoubleJump", 1);
+            light.enabled = true;
+        }
     }
 
 }

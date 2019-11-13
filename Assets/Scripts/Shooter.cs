@@ -52,9 +52,9 @@ public class Shooter : MonoBehaviour
         if(timer >= fireDelay)
         {
             timer = 0f;
-            GameObject bulletInstance = Instantiate(bullet, spawnPoint.position, spawnPoint.rotation);
+            GameObject bulletInstance = Instantiate(bullet, spawnPoint.position, spawnPoint.rotation) ;
             bulletInstance.transform.localScale = transform.localScale*2f;
-            bulletInstance.GetComponent<Rigidbody>().AddForce(bulletInstance.transform.forward * bulletSpeed, ForceMode.VelocityChange);
+            bulletInstance.GetComponent<Rigidbody>().AddRelativeForce(Vector3.forward * bulletSpeed, ForceMode.VelocityChange);
             Destroy(bulletInstance, bulletLifeTime);
         }
 
